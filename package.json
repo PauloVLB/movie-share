@@ -1,0 +1,16 @@
+{
+  "name": "movie-share",
+  "version": "1.0.0",
+  "description": "A way to sync movies in vlc between pc's",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron src/main.js"
+  },
+  "keywords": [],
+  "author": "Paulo Vitor",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.3"
+  }
+}
