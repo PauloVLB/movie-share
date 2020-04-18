@@ -1,15 +1,27 @@
-const { app, BrowserWindow } = require('electron');
+const { app, Menu, Tray, globalShortcut } = require('electron');
+const path = require('path');
 
-function createWindow() {
-    let win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true
-        }
+const appIcon = path.join(__dirname, '..', 'assets', 'heart.png');
+
+let tray = null;
+let paused = true;
+
+app.on('ready', () => {
+    tray = new Tray(appIcon);
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Item1', type: 'radio' },
+        { label: 'Item2', type: 'radio', checked: true },
+        { label: 'Item3', type: 'radio' }
+    ]);
+
+    tray.setContextMenu(contextMenu);
+    
+    globalShortcut.register('Control+Space', () => {
+        console.log(paused ? 'play' : 'pause');
+        paused = !paused;
     });
+});
 
-    win.loadFile('index.html');
-}
-
-app.whenReady().then(createWindow);
+app.on('will-quit', () => {
+    globalShortcut.unregisterAll();
+});
