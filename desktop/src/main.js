@@ -5,10 +5,20 @@ const { spawn } = require('child_process');
 const appIcon = resolve(__dirname, '..', 'assets', 'heart.png');
 
 let tray = null;
-let paused = true;
+let rc = null;
+
+const tempPath = '"/media/paulo/WData/Torrents/Séries/Rick1/rick01"';
 
 app.on('ready', () => {
-    createTray();    
+    createTray();  
+    
+    //rc = spawn('vlc', ['-I rc', tempPath], { shell: true });
+    vlc = spawn('vlc', 
+            ['-I http', '--http-password 123', tempPath], 
+            { shell: true }
+            );
+    
+    
     addShortcuts();
 });
 
@@ -18,21 +28,10 @@ app.on('will-quit', () => {
 
 const createTray = () => {
     tray = new Tray(appIcon);
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Item1', type: 'radio' },
-        { label: 'Item2', type: 'radio', checked: true },
-        { label: 'Item3', type: 'radio' }
-    ]);
-
-    tray.setContextMenu(contextMenu);
 };
 
 const addShortcuts = () => {
     globalShortcut.register('Control+Space', () => {
-        spawn('dbus-send', 
-        ['--type=method_call', 
-        '--dest=org.mpris.MediaPlayer2.vlc', 
-        '/org/mpris/MediaPlayer2', 
-        'org.mpris.MediaPlayer2.Player.PlayPause']);
+        rc.stdin.write('seek 800');
     });
 };
