@@ -1,63 +1,20 @@
-const { app, Menu, Tray, globalShortcut } = require('electron');
+const { app } = require('electron');
 const { resolve } = require('path');
-const { spawn } = require('child_process');
-const io = require('socket.io-client');
 
-const appIcon = resolve(__dirname, 'assets', 'heart.png');
-const socket = io('http://localhost:3000');
-
-let tray = null;
-let rc = null;
+const tray = require('./utils/tray');
+const vlc = require('./utils/vlc');
+const shortcuts = require('./utils/shortcuts');
 
 const tempPath = '"/media/paulo/WData/Torrents/Séries/Rick1/rick01"';
 
 app.on('ready', () => {  
-    createTray();  
-    rc = spawn('vlc', ['-I rc', tempPath], { shell: true }); 
-    sync();
-    addShortcuts();
-});
-
-socket.on('broadcast', (action) => {
-    rc.stdin.write(action);
+    tray.create(app);  
+    vlc.open(tempPath);
+    vlc.sync();
+    vlc.execute();
+    shortcuts.addAll();
 });
 
 app.on('will-quit', () => {
-    globalShortcut.unregisterAll();
-    socket.close();
+    shortcuts.removeAll();
 });
-
-const createTray = () => {
-    tray = new Tray(appIcon);
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Quit', type: 'normal', click: () => { app.quit(); } },
-    ]);
-
-    tray.setContextMenu(contextMenu);
-};
-
-const addShortcuts = () => {
-    globalShortcut.register('Control+Space', () => {
-        socket.emit('action', 'pause\n');
-    });
-   
-    globalShortcut.register('Control+Left', () => {
-        socket.emit('action', 'seek -10\n');
-    });
-
-    globalShortcut.register('Control+Right', () => {
-        socket.emit('action', 'seek +10\n');
-    });
-
-    globalShortcut.register('S', () =>{
-        sync();
-    });
-};
-
-const sync = () => {
-    rc.stdin.write('get_time\n');
-    rc.stdout.once('data', (data) => {
-        const time = data.toString().split('\n')[0];
-        socket.emit('action', 'seek ' + time + '\n');
-    });
-};
