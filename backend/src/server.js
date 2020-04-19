@@ -7,8 +7,6 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-    console.log(`Connected socket: ${socket.id}`);
-
     socket.on('action', (action) => {
         io.emit('broadcast', action);
     });

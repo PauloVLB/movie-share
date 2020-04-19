@@ -14,6 +14,7 @@ const tempPath = '"/media/paulo/WData/Torrents/Séries/Rick1/rick01"';
 app.on('ready', () => {  
     createTray();  
     rc = spawn('vlc', ['-I rc', tempPath], { shell: true }); 
+    sync();
     addShortcuts();
 });
 
@@ -43,11 +44,15 @@ const addShortcuts = () => {
         socket.emit('action', 'seek +10\n');
     });
 
-    globalShortcut.register('Control+F', () =>{
-        rc.stdin.write('get_time\n');
-        rc.stdout.once('data', (data) => {
-            const time = data.toString().split('\n')[0];
-            socket.emit('action', 'seek ' + time + '\n');
-        });
+    globalShortcut.register('S', () =>{
+        sync();
+    });
+};
+
+const sync = () => {
+    rc.stdin.write('get_time\n');
+    rc.stdout.once('data', (data) => {
+        const time = data.toString().split('\n')[0];
+        socket.emit('action', 'seek ' + time + '\n');
     });
 };

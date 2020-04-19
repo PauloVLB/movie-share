@@ -1,5 +1,5 @@
 {
-  "name": "movie-share-1",
+  "name": "movie-share",
   "version": "1.0.0",
   "description": "A way to sync movies in vlc between pc's",
   "main": "main.js",
