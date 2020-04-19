@@ -7,11 +7,11 @@ const shortcuts = require('./utils/shortcuts');
 
 const tempPath = '"/media/paulo/WData/Torrents/Séries/Rick1/rick01"';
 
-app.on('ready', () => {  
+app.on('ready', async () => {  
     tray.create(app);  
     vlc.open(tempPath);
-    vlc.sync();
     vlc.execute();
+    vlc.sync();
     shortcuts.addAll();
 });
 
