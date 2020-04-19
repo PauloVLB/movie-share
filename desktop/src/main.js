@@ -29,6 +29,11 @@ app.on('will-quit', () => {
 
 const createTray = () => {
     tray = new Tray(appIcon);
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Quit', type: 'normal', click: () => { app.quit(); } },
+    ]);
+
+    tray.setContextMenu(contextMenu);
 };
 
 const addShortcuts = () => {
