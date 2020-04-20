@@ -6,7 +6,14 @@ let vlc = null;
 
 module.exports = {
     open(path) {
-        vlc = spawn('vlc', ['-I rc', path, '--start-paused'], { shell: true }); 
+        vlc = spawn('vlc', 
+            [`"${path}"`, 
+                '--extraintf rc', 
+                '--start-paused', 
+                '--no-qt-system-tray',
+            ],       
+            { shell: true });     
+          
     },
     
     pause() { socket.emit('action', 'pause\n'); },
@@ -25,12 +32,8 @@ module.exports = {
         socket.on('broadcast', (action) => {
             vlc.stdin.write(action);
         });
-    }, 
-    
-    trah() {
         vlc.stdout.once('data', (data) =>{
             data.toString();    
         });
-        
-    },
+    }, 
 };
