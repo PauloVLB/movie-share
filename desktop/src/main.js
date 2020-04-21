@@ -28,10 +28,10 @@ app.on('ready', async () => {
     vlc.open(path, vlcPath);
 
     vlc.execute();
-    vlc.sync();
     shortcuts.addAll();
 });
 
 app.on('will-quit', () => {
     shortcuts.removeAll();
+    vlc.close();
 });

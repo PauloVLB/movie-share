@@ -8,7 +8,13 @@ module.exports = {
     createTray() {
         tray = new Tray(appIcon);
         const contextMenu = Menu.buildFromTemplate([
-            { label: 'Quit', type: 'normal', click: () => { app.quit(); } },
+            {   
+                label: 'Quit', 
+                type: 'normal', 
+                click: () => { 
+                    app.quit();
+                } 
+            },
         ]);
     
         tray.setContextMenu(contextMenu);

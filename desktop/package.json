@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron src/main.js",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "distwin": "electron-builder --windows"
   },
   "keywords": [],
   "author": "Paulo Vitor <vitorlimaborges@gmail.com>",
@@ -18,17 +19,14 @@
     "electron-builder": "^22.5.1"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "child-process": "^1.0.2",
     "electron-store": "^5.1.1",
     "socket.io": "^2.3.0"
   },
   "build": {
     "appId": "com.movie-share",
-    "linux": {
-      "category": "Utility",
-      "target": [
-        "deb"
-      ]
-    }
+    "remoteBuild": true
   }
 }
