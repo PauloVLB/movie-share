@@ -5,15 +5,14 @@ const socket = require('./io');
 let vlc = null;
 
 module.exports = {
-    open(path) {
+    open(moviePath, vlcPath=null) {
         vlc = spawn('vlc', 
-            [`"${path}"`, 
+            [`"${moviePath}"`, 
                 '--extraintf rc', 
                 '--start-paused', 
                 '--no-qt-system-tray',
             ],       
-            { shell: true });     
-          
+            { shell: true, cwd: vlcPath });             
     },
     
     pause() { socket.emit('action', 'pause\n'); },
