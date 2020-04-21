@@ -1,21 +1,34 @@
 {
   "name": "movie-share",
+  "productName": "Movie Share",
   "version": "1.0.0",
   "description": "A way to sync movies in vlc between pc's",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron src/main.js"
+    "start": "electron src/main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "keywords": [],
-  "author": "Paulo Vitor",
+  "author": "Paulo Vitor <vitorlimaborges@gmail.com>",
+  "repository": "https://github.com/PauloVLB/movie-share",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^8.2.3"
+    "electron": "^8.2.3",
+    "electron-builder": "^22.5.1"
   },
   "dependencies": {
     "child-process": "^1.0.2",
     "electron-store": "^5.1.1",
     "socket.io": "^2.3.0"
+  },
+  "build": {
+    "appId": "com.movie-share",
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "deb"
+      ]
+    }
   }
 }

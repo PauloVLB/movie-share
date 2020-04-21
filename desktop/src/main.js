@@ -8,7 +8,6 @@ const shortcuts = require('./utils/shortcuts');
 
 const store = new Store();
 
-
 app.on('ready', async () => {  
     let vlcPath = null;
     
