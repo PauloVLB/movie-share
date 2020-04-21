@@ -33,7 +33,7 @@ module.exports = {
         const res = await axios.get(GET_URL);
         const $ = cheerio.load(res.data);
         const time = $('time');
-        await axios.post(POST_URL+'seek&val='+time.text());
+        socket.emit('action', 'seek&val='+time.text());
     },
 
     execute() {
