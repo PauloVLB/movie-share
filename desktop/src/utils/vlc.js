@@ -40,8 +40,5 @@ module.exports = {
         socket.on('broadcast', async (action) => {
             await axios.post(POST_URL+action);
         });
-        vlc.stdout.once('data', (data) => {
-            console.log(data.toString());    
-        });
     }, 
 };
