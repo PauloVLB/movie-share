@@ -18,11 +18,15 @@ module.exports = {
                 '--no-qt-system-tray',
                 '--http-password 123',
             ],       
-            { shell: true, cwd: vlcPath });             
+            { shell: true, cwd: vlcPath }
+        );
     },
 
     close() {
-        vlc.kill();
+        try{
+            vlc.kill('SIGKILL');
+            console.log("é pra fechar po");
+        }catch(err){ console.log(err); }
     },
 
     pause() { socket.emit('action', 'pl_pause'); },

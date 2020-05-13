@@ -22,11 +22,7 @@ app.on('ready', async () => {
         }
     } 
     
-    ui.createTray();
-
-    const path = await ui.dialogPath('openFile', 'Choose Video');
-    vlc.open(path, vlcPath);
-
+    ui.createTray(vlcPath);
     vlc.execute();
     shortcuts.addAll();
 });

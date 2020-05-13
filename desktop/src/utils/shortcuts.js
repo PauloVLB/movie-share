@@ -8,6 +8,7 @@ module.exports = {
         globalShortcut.register('Control+Left', () => { vlc.backwards(); });
         globalShortcut.register('Control+Right', () => { vlc.foward(); });
         globalShortcut.register('S', () => { vlc.sync(); });
+        globalShortcut.register('Y', () => { vlc.close(); });
     },
 
     removeAll() {
