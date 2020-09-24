@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Share</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="assistirCard">
+        <div>
+            <h1>
+                Bem vindo(a) ao Movie Share
+            </h1>
+            <p>
+                Assista filmes em conjunto, simultaneamente.
+            </p>
+            <button onclick="showVideo()">
+                Começar a assistir
+            </button>
+        </div>
+    </div>
+
+    <video controls>
+        <source src="https://drive.google.com/uc?export=view&id=1na7sYcYkpdHzX8nZr7cmf3-YtQzDN-_M" type="video/mp4">
+        Seu navegador não suporta o elemento <code>video</code>.
+    </video>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"
+        integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA=="
+        crossorigin="anonymous"></script>
+    <script>
+        const video = document.querySelector('video')
+        const socket = io('http://localhost:3000')
+
+        video.addEventListener('play', () => {
+            socket.emit('action', 'play')
+        })
+
+        video.addEventListener('pause', () => {
+            socket.emit('action', 'pause')
+        })
+
+        video.addEventListener('playing', () => {
+            const seconds = video.currentTime
+            socket.emit('action', 'goTo', seconds)
+        })
+
+        function showVideo() {
+            video.style.display = 'block'
+            document.querySelector('button').style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>
