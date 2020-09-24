@@ -17,8 +17,11 @@
             <p>
                 Assista filmes em conjunto, simultaneamente.
             </p>
-            <button onclick="showVideo()">
+            <button id="btnComecar" onclick="show()">
                 Começar a assistir
+            </button>
+            <button id="btnSincronizar" onclick="sincronizarClients()">
+                Sincronizar
             </button>
         </div>
     </div>
@@ -43,14 +46,20 @@
             socket.emit('action', 'pause')
         })
 
-        video.addEventListener('playing', () => {
+        video.addEventListener('seeked', () => {
             const seconds = video.currentTime
             socket.emit('action', 'goTo', seconds)
         })
 
-        function showVideo() {
+        function show() {
             video.style.display = 'block'
-            document.querySelector('button').style.display = 'none'
+            document.querySelector('#btnComecar').style.display = 'none'
+            document.querySelector('#btnSincronizar').style.display = 'block'
+        }
+
+        function sincronizarClients() {
+            const seconds = video.currentTime
+            socket.emit('action', 'goTo', seconds)
         }
     </script>
 </body>

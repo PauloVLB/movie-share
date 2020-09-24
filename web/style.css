@@ -2,3 +2,7 @@ video {
     display: none;
     width: 100%;
 }
+
+#btnSincronizar {
+    display: none;
+}
